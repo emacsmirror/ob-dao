@@ -1,0 +1,57 @@
+* ob-dao
+
+  This little Emacs package adds Org-Babel support for evaluating [[http://daoscript.org/][Dao]] code.
+
+** Examples
+
+   "Hello World!"
+
+   #+BEGIN_SRC org
+     ,#+BEGIN_SRC dao
+     io.write("Hello, World!")
+     ,#+END_SRC
+
+     ,#+RESULTS:
+     : Hello, World!
+   #+END_SRC
+
+   You can supply command line options to ~dao~ via the header argument
+   ~:options~, for example, use ~--list-code~ to print compiled bytecodes:
+
+   #+BEGIN_SRC org
+     ,#+BEGIN_SRC dao :options --list-code
+     io.write("Hello, World!")
+     ,#+END_SRC
+
+     ,#+RESULTS:
+     ,#+BEGIN_EXAMPLE
+     ==========================================
+     routine __main__():
+     type: routine<=>none>
+     Number of register:
+     5
+     ==========================================
+     Virtual Machine Code:
+
+        ID :    OPCODE    :     A ,     B ,     C ;  [ LINE ],  NOTES
+     -------------------------------------------------------------------------
+         0 :  GETCG       :     1 ,    23 ,     0 ;     1;   io
+         1 :  GETCL       :     0 ,     0 ,     1 ;     1;   io
+         2 :  LOAD        :     0 ,     0 ,     2 ;     1;   io. write
+         3 :  GETCL       :     0 ,     1 ,     3 ;     1;   "Hello, World!"
+         4 :  MCALL       :     1 ,     2 ,     4 ;     1;   io. write("Hell...")
+         5 :  RETURN      :     4 ,     1 ,     0 ;     1;   io. write("Hell...")
+     -------------------------------------------------------------------------
+     Hello, World!
+     ,#+END_EXAMPLE
+   #+END_SRC
+
+** Customization
+
+   If ~dao~ is not in your ~PATH~ (Emacs actually cares about the variable
+   ~exec-path~, which is initialized from the environment variable ~PATH~), you
+   can set ~org-babel-dao-command~ to full path to ~dao~, something like:
+
+   #+BEGIN_SRC emacs-lisp
+   (setq org-babel-dao-command "/path/to/dao")
+   #+END_SRC
