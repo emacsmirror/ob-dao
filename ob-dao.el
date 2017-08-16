@@ -3,6 +3,7 @@
 ;; Copyright (C) 2017  Chunyang Xu
 
 ;; Author: Chunyang Xu <mail@xuchunyang.me>
+;; Package-Requires: ((org "8"))
 ;; Keywords: literate programming, reproducible research, org, babel, dao
 ;; URL: https://github.com/xuchunyang/ob-dao
 ;; Version: 0.1.0
@@ -37,15 +38,10 @@
   "Execute a block of Dao code with Babel.
 This function is called by `org-babel-execute-src-block'."
   (message "executing Dao source code block")
-  (let* ((tmp-src-file (org-babel-temp-file "dao-src-" ".dao"))
-         (_ (with-temp-file tmp-src-file (insert body)))
-         (options (or (cdr (assq :options params)) ""))
-         (cmd (format "%s %s %s"
-                      (shell-quote-argument org-babel-dao-command)
-                      options
-                      tmp-src-file))
-         (results (org-babel-eval cmd "")))
-    results))
+  (org-babel-eval (format "%s --eval %s"
+                          (shell-quote-argument org-babel-dao-command)
+                          (shell-quote-argument body))
+                  ""))
 
 (defun org-babel-prep-session:dao (_session _params)
   "Prepare a session.
