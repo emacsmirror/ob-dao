@@ -30,13 +30,18 @@
 
 (require 'ob)
 
+(defvar org-babel-dao-command "dao"
+  "Name of the dao executable command.")
+
 (defun org-babel-execute:dao (body _params)
   "Execute a block of Dao code with Babel.
 This function is called by `org-babel-execute-src-block'."
   (message "executing Dao source code block")
   (let ((tmp-src-file (org-babel-temp-file "dao-src-" ".dao")))
     (with-temp-file tmp-src-file (insert body))
-    (org-babel-eval (format "dao %s" tmp-src-file) "")))
+    (org-babel-eval (format "%s %s"
+                            (shell-quote-argument org-babel-dao-command)
+                            tmp-src-file) "")))
 
 (defun org-babel-prep-session:dao (_session _params)
   "Prepare a session.
