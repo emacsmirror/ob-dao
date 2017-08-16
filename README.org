@@ -4,7 +4,7 @@
 
 ** Examples
 
-   "Hello World!"
+   ~Hello World!~:
 
    #+BEGIN_SRC org
      ,#+BEGIN_SRC dao
@@ -14,6 +14,32 @@
      ,#+RESULTS:
      : Hello, World!
      : = none
+   #+END_SRC
+
+   Reduction of List:
+
+   #+BEGIN_SRC org
+     ,#+BEGIN_SRC dao
+     var lst = { 1, 2, 3 }
+     lst.reduce(0){ [x, sum] sum += x }
+     ,#+END_SRC
+
+     ,#+RESULTS:
+     : = 6
+
+   #+END_SRC
+
+   By default, ~-e/--eval~ is used to evaluate the code block. To supply extra
+   options to dao, use the header argument ~:options~, e.g.,
+
+   #+BEGIN_SRC org
+     ,#+BEGIN_SRC dao :options --autovar
+     x = 1
+     x + 100
+     ,#+END_SRC
+
+     ,#+RESULTS:
+     : = 101
    #+END_SRC
 
 ** Customization

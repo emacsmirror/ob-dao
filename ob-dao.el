@@ -38,10 +38,12 @@
   "Execute a block of Dao code with Babel.
 This function is called by `org-babel-execute-src-block'."
   (message "executing Dao source code block")
-  (org-babel-eval (format "%s --eval %s"
-                          (shell-quote-argument org-babel-dao-command)
-                          (shell-quote-argument body))
-                  ""))
+  (let ((options (or (or (cdr (assq :options params))) "")))
+    (org-babel-eval (format "%s %s --eval %s"
+                            (shell-quote-argument org-babel-dao-command)
+                            options
+                            (shell-quote-argument body))
+                    "")))
 
 (defun org-babel-prep-session:dao (_session _params)
   "Prepare a session.
