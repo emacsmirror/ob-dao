@@ -38,7 +38,7 @@
   "Execute a block of Dao code with Babel.
 This function is called by `org-babel-execute-src-block'."
   (message "executing Dao source code block")
-  (let ((options (or (or (cdr (assq :options params))) "")))
+  (let ((options (or (cdr (assq :options params)) "")))
     (org-babel-eval (format "%s %s --eval %s"
                             (shell-quote-argument org-babel-dao-command)
                             options
