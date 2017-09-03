@@ -1,4 +1,5 @@
-* ob-dao
+* ob-dao 
+[[https://melpa.org/#/ob-dao][file:https://melpa.org/packages/ob-dao-badge.svg]]
 
   This little Emacs package adds Org-Babel support for evaluating [[http://daoscript.org/][Dao]] code.
 
